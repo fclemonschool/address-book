@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import com.example.addressbook.model.request.AddressBookRequest;
 import com.example.addressbook.service.AddressService;
@@ -20,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AddressBookController.class)
@@ -32,11 +34,14 @@ class AddressBookControllerTest {
   private ObjectMapper objectMapper;
 
   @Autowired
+  private WebApplicationContext webApplicationContext;
+
   private MockMvc mockMvc;
 
   @BeforeEach
   public void initAll() {
     this.objectMapper = new ObjectMapper();
+    this.mockMvc = webAppContextSetup(webApplicationContext).build();
   }
 
   @Test
